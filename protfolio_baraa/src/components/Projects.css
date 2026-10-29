@@ -1,0 +1,271 @@
+/* =========================================================
+   Projects (#projects)
+   ========================================================= */
+
+.projects__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+  gap: var(--space-5);
+}
+
+/* ---------- Card ---------- */
+
+.project-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  transition:
+    transform var(--transition-base),
+    border-color var(--transition-base),
+    box-shadow var(--transition-base);
+}
+
+.project-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--color-border-strong);
+  box-shadow: var(--shadow-lift);
+}
+
+.project-card__media {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 9;
+  max-width: 100%;
+  overflow: hidden;
+  background: var(--color-surface-elevated);
+  border-bottom: 1px solid var(--color-border);
+  color: inherit;
+}
+
+a.project-card__media:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: -2px;
+}
+
+.project-card__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  filter: saturate(0.85);
+  transition: transform 0.6s var(--ease), filter 0.6s var(--ease);
+}
+
+.project-card:hover .project-card__img {
+  transform: scale(1.04);
+  filter: saturate(1);
+}
+
+.project-card__placeholder {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  color: var(--color-text-muted);
+  background: var(--texture-tiles), var(--color-surface-elevated);
+}
+
+.project-card__kind {
+  position: absolute;
+  top: var(--space-3);
+  left: var(--space-3);
+  padding: 0.25rem 0.7rem;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--color-text);
+  background: var(--color-overlay);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+
+.project-card__play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  place-items: center;
+  width: 3.6rem;
+  height: 3.6rem;
+  color: var(--color-on-accent);
+  background: var(--color-accent);
+  border-radius: 50%;
+  box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.7);
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.9);
+  transition: opacity var(--transition-base), transform var(--transition-base);
+}
+
+.project-card__play svg {
+  margin-left: 2px; /* optical centre of the triangle */
+}
+
+.project-card__media:hover .project-card__play,
+.project-card__media:focus-visible .project-card__play {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* On touch screens there is no hover, so always show the play button */
+@media (hover: none) {
+  .project-card__play {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.project-card__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: var(--space-5);
+}
+
+.project-card__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.project-card__text {
+  margin: var(--space-2) 0 0;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+}
+
+.project-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: var(--space-4) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.project-card__tags li {
+  padding: 0.2rem 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+.project-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: auto;
+  padding-top: var(--space-5);
+}
+
+/* Compact button variant (extends .btn from index.css) */
+.btn--sm {
+  padding: 0.55rem 1rem;
+  font-size: 0.85rem;
+}
+
+/* ---------- "More on GitHub" card ---------- */
+
+.project-more {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: var(--space-2);
+  min-width: 0;
+  min-height: 16rem;
+  padding: var(--space-5);
+  overflow: hidden;
+  color: var(--color-text);
+  text-decoration: none;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  transition:
+    transform var(--transition-base),
+    border-color var(--transition-base),
+    box-shadow var(--transition-base);
+}
+
+/* Mosaic fades in from the top corner */
+.project-more::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: var(--texture-tiles);
+  -webkit-mask-image: radial-gradient(circle at 100% 0%, #000 0%, transparent 75%);
+  mask-image: radial-gradient(circle at 100% 0%, #000 0%, transparent 75%);
+}
+
+.project-more:hover {
+  transform: translateY(-4px);
+  border-color: var(--color-accent-line);
+  box-shadow: var(--shadow-lift);
+}
+
+.project-more:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+.project-more__icon {
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  margin-bottom: auto;
+  color: var(--color-accent);
+  background: var(--color-accent-subtle);
+  border: 1px solid var(--color-accent-line);
+  border-radius: var(--radius-md);
+  transition: color var(--transition-base), background-color var(--transition-base);
+}
+
+.project-more:hover .project-more__icon {
+  color: var(--color-on-accent);
+  background: var(--color-accent);
+}
+
+.project-more__title {
+  margin-top: var(--space-6);
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.project-more__text {
+  font-size: 0.92rem;
+  color: var(--color-text-muted);
+}
+
+.project-more__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--color-accent);
+}
+
+.project-more__link svg {
+  transition: transform var(--transition-base);
+}
+
+.project-more:hover .project-more__link svg {
+  transform: translate(2px, -2px);
+}
